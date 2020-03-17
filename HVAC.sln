@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Decisions Layer", "Decisions Layer", "{4D7B9DDB-7938-418C-9593-BFFF6E49794F}"
+ProjectSection(SolutionItems) = preProject
+	Decisions Layer\Temperature.py = Decisions Layer\Temperature.py
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceLayer", "ServiceLayer", "{174A656A-C518-4C7B-9B4C-49590E211D8A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceLayerApi", "ServiceLayerApi\ServiceLayerApi.csproj", "{3E46FE90-8B28-478F-95AF-A6DC970FE084}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DeviceLayer", "DeviceLayer", "{C805B8C6-5012-4FAE-85F7-9A47F7EB5702}"
+ProjectSection(SolutionItems) = preProject
+	DeviceLayer\temprature_sensor.ino = DeviceLayer\temprature_sensor.ino
+EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3E46FE90-8B28-478F-95AF-A6DC970FE084} = {174A656A-C518-4C7B-9B4C-49590E211D8A}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3E46FE90-8B28-478F-95AF-A6DC970FE084}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E46FE90-8B28-478F-95AF-A6DC970FE084}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E46FE90-8B28-478F-95AF-A6DC970FE084}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E46FE90-8B28-478F-95AF-A6DC970FE084}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
