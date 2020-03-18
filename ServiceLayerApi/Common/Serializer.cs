@@ -8,5 +8,10 @@ namespace ServiceLayerApi.Common
         {
             return JsonSerializer.Serialize(value);
         }
+
+        public static T Deserialize<T>(this string value)
+        {
+            return JsonSerializer.Deserialize<T>(value);
+        }
     }
 }

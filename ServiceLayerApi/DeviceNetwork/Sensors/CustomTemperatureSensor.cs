@@ -6,7 +6,7 @@ using ServiceLayerApi.DeviceNetwork.Messages;
 
 namespace ServiceLayerApi.DeviceNetwork.Sensors
 {
-    public class CustomTemperatureSensor : ISensor<double>
+    public class CustomTemperatureSensor : ISensor
     {
         public CustomTemperatureSensor(Guid id, bool inside)
         {
@@ -18,10 +18,10 @@ namespace ServiceLayerApi.DeviceNetwork.Sensors
         public ParameterType Parameter { get; }
 
 
-        public SensorResult<double> ProcessMessage(SensorValues sensorValues)
+        public SensorResult NormalizeValue(SensorValues sensorValues)
         {
             var temperatureCelsius = double.Parse(sensorValues.RawValue);
-            return new SensorResult<double>(temperatureCelsius, Parameter);
+            return new SensorResult(temperatureCelsius, Parameter, Id);
         }
     }
     

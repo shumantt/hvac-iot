@@ -25,12 +25,13 @@
         </e>
         <e p="DataProcessing" t="Include">
           <e p="Messages" t="Include">
+            <e p="MicroclimateParameterValue.cs" t="Include" />
             <e p="SensorValues.cs" t="Include" />
           </e>
+          <e p="ParameterAgregator.cs" t="Include" />
           <e p="SensorProcessingService.cs" t="Include" />
         </e>
         <e p="DeviceNetwork" t="Include">
-          <e p="Actuators" t="Include" />
           <e p="Description" t="Include">
             <e p="CommandImpact.cs" t="Include" />
             <e p="DeviceFactory.cs" t="Include" />
@@ -39,6 +40,8 @@
             <e p="IDeviceBuilder.cs" t="Include" />
             <e p="ParameterType.cs" t="Include" />
           </e>
+          <e p="DeviceInfoProcessingService.cs" t="Include" />
+          <e p="DeviceRepository.cs" t="Include" />
           <e p="Messages" t="Include">
             <e p="DeviceInfo.cs" t="Include" />
           </e>
@@ -48,7 +51,9 @@
           </e>
         </e>
         <e p="MQTT" t="Include">
+          <e p="BaseProcessingService.cs" t="Include" />
           <e p="Client" t="Include">
+            <e p="MqttClientExtensions.cs" t="Include" />
             <e p="MqttClientRepository.cs" t="Include" />
           </e>
         </e>

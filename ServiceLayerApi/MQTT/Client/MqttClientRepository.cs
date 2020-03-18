@@ -20,10 +20,10 @@ namespace ServiceLayerApi.MQTT.Client
             _logger = logger;
         }
         
-        public async Task Register(string topic, Action<string, byte[]> messageHandler)
+        public async Task<IManagedMqttClient> Subscribe(string topic, Func<string, byte[], Task> messageHandler)
         {
-            if(_clients.ContainsKey(topic))
-                throw new InvalidOperationException($"Client for topic {topic} already registered");
+            if (_clients.ContainsKey(topic))
+                return _clients[topic];
 
             var logger = new MqttNetLogger();
             logger.LogMessagePublished += (sender, args) =>
@@ -43,19 +43,21 @@ namespace ServiceLayerApi.MQTT.Client
                     .Build())
                 .Build();
             
-            await mqttClient.SubscribeAsync(new TopicFilterBuilder().WithTopic(topic).Build());
-            await mqttClient.StartAsync(options);
             mqttClient.UseConnectedHandler(e =>
             {
                 _logger.LogInformation($"Connected: {e.AuthenticateResult.ToJson()}");
             });
-
-            mqttClient.UseApplicationMessageReceivedHandler(e =>
+            
+            mqttClient.UseApplicationMessageReceivedHandler(async e =>
             {
-                Task.Run(() => messageHandler(e.ClientId, e.ApplicationMessage.Payload));
+                await messageHandler(e.ClientId, e.ApplicationMessage.Payload).ConfigureAwait(false);
             });
             
+            await mqttClient.SubscribeAsync(new TopicFilterBuilder().WithTopic(topic).Build());
+            await mqttClient.StartAsync(options);
+
             _clients.TryAdd(topic, mqttClient);
+            return mqttClient;
         }
     }
 }

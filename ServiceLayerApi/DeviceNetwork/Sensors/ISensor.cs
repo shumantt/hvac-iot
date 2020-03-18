@@ -1,23 +1,28 @@
+using System;
 using ServiceLayerApi.DataProcessing.Messages;
 using ServiceLayerApi.DeviceNetwork.Description;
 using ServiceLayerApi.DeviceNetwork.Messages;
 
 namespace ServiceLayerApi.DeviceNetwork.Sensors
 {
-    public interface ISensor<TValue> : IDevice
+    public interface ISensor : IDevice
     {
-        SensorResult<TValue> ProcessMessage(SensorValues sensorValues);
+        SensorResult NormalizeValue(SensorValues sensorValues);
     }
 
-    public class SensorResult<TValue>
+    public class SensorResult
     {
-        public SensorResult(TValue value, ParameterType parameter)
+        public SensorResult(object value, ParameterType parameter, Guid deviceId)
         {
-            Value = value;
+            RawValue = value;
             Parameter = parameter;
+            DeviceId = deviceId;
         }
 
-        public TValue Value { get; }
+        protected object RawValue { get; }
         public ParameterType Parameter { get; }
+        public Guid DeviceId { get; }
+
+        public T GetValue<T>() => (T) RawValue;
     }
 }
