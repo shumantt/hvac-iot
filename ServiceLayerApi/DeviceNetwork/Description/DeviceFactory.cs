@@ -30,7 +30,7 @@ namespace ServiceLayerApi.DeviceNetwork.Description
 
         private IDevice BuildDefault(DeviceInfo deviceInfo)
         {
-            throw new InvalidOperationException($"No builders for device: {deviceInfo.ToJson()}");
+            return null;
         }
     }
 }

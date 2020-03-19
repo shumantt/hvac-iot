@@ -2,11 +2,10 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using MQTTnet.Extensions.ManagedClient;
-using ServiceLayerApi.Common;
+using System.Timers;
 using ServiceLayerApi.DataProcessing.Messages;
+using ServiceLayerApi.DeviceNetwork;
 using ServiceLayerApi.DeviceNetwork.Description;
 using ServiceLayerApi.DeviceNetwork.Sensors;
 using ServiceLayerApi.MQTT;
@@ -16,31 +15,42 @@ namespace ServiceLayerApi.DataProcessing
 {
     public class SensorProcessingService : BaseProcessingService<SensorValues>
     {
-        private readonly MqttClientRepository _mqttClientRepository;
         private readonly IParameterAggregator[] _parameterAggregators;
-        private readonly ConcurrentDictionary<Guid, ISensor> _sensors = new ConcurrentDictionary<Guid, ISensor>();
-        private readonly ConcurrentQueue<SensorResult> _sensorResults = new ConcurrentQueue<SensorResult>();
+        private readonly DeviceRepository _deviceRepository;
+        private ConcurrentQueue<SensorResult> _sensorResults = new ConcurrentQueue<SensorResult>();
+        private readonly Timer _timer;
         private const int maxValuesToProcess = 100;
-        private string microclimateParametersTopic = "data/microclimate";
-        
+        private string microClimateParametersTopic = "data/microclimate";
+        private const int timerPeriod = 60_000;
+
         public SensorProcessingService(MqttClientRepository mqttClientRepository,
-            IParameterAggregator[] parameterAggregators) : base(mqttClientRepository)
+            IParameterAggregator[] parameterAggregators,
+            DeviceRepository deviceRepository) : base(mqttClientRepository)
         {
-            _mqttClientRepository = mqttClientRepository;
             _parameterAggregators = parameterAggregators;
+            _deviceRepository = deviceRepository;
+            _timer = new Timer(timerPeriod) { AutoReset = true };
+            _timer.Elapsed += (_, __) => AggregateResults();
+            _timer.Enabled = true;
         }
 
         protected override string Topic => "data/sensors";
 
         protected override async Task Process(Guid deviceId, SensorValues message)
         {
-            if(!_sensors.TryGetValue(deviceId, out var sensor))
+            var sensor = _deviceRepository.GetSensor(deviceId);
+            if(sensor == null)
                 return;
             var sensorResult = sensor.NormalizeValue(message);
             _sensorResults.Enqueue(sensorResult);
         }
 
         protected override Task OnStart() => Task.CompletedTask;
+        protected override Task OnStop()
+        {
+            _timer.Enabled = false;
+            return Task.CompletedTask;
+        }
 
         private Task AggregateResults()
         {
@@ -48,7 +58,7 @@ namespace ServiceLayerApi.DataProcessing
 
             var publishTasks = sensorResults.GroupBy(x => x.Parameter)
                 .Select(Aggregate)
-                .Select(x => MqttClient.PublishAsync(microclimateParametersTopic, x));
+                .Select(x => MqttClient.PublishAsync(microClimateParametersTopic, x));
 
             return Task.WhenAll(publishTasks);
             

@@ -2,21 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="afbfec76-f142-4436-9c0e-6df5325d9a30" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ServiceLayerApi/DataProcessing/Messages/MicroClimateParameterValue.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ServiceLayerApi/DataProcessing/ParameterAgregator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/DeviceInfoProcessingService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/DeviceRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ServiceLayerApi/MQTT/BaseProcessingService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ServiceLayerApi/MQTT/Client/MqttClientExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.HVAC/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HVAC/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.HVAC/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HVAC/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServiceLayerApi/Common/Serializer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceLayerApi/Common/Serializer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServiceLayerApi/DataProcessing/Messages/SensorValues.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceLayerApi/DataProcessing/Messages/SensorValues.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ServiceLayerApi/DataProcessing/SensorProcessingService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceLayerApi/DataProcessing/SensorProcessingService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/Sensors/CustomTemperatureSensor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/Sensors/CustomTemperatureSensor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/Sensors/ISensor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/Sensors/ISensor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServiceLayerApi/MQTT/Client/MqttClientRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceLayerApi/MQTT/Client/MqttClientRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/Description/DeviceFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/Description/DeviceFactory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/DeviceInfoProcessingService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/DeviceInfoProcessingService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/DeviceRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/DeviceRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServiceLayerApi/MQTT/BaseProcessingService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceLayerApi/MQTT/BaseProcessingService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +42,7 @@
     <setting file="file://$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/Description/DeviceFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/Description/CommandImpact.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8E984B29-4CCB-4F58-9621-F4F330C94558/42/65233bc5/MqttNetGlobalLogger.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/56C02F65-7F8E-4DE0-B35F-CD26C3C2693D/13F/Timer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/Description/IDeviceBuilder.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/85DE7BB7-1113-42CE-8734-1CB9DED5A5C9/e4/5636db1d/ILogger`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ServiceLayerApi/DataProcessing/Messages/SensorValues.cs" root0="FORCE_HIGHLIGHTING" />
@@ -81,7 +73,6 @@
         <option value="$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/Description/IDevice.cs" />
         <option value="$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/Messages/SensorValues.cs" />
         <option value="$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/Description/ParameterType.cs" />
-        <option value="$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/Description/DeviceFactory.cs" />
         <option value="$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/Description/DeviceBuilders/IDeviceBuilder.cs" />
         <option value="$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/Description/DeviceBuilders/CustomTemperatureSensorBuilder.cs" />
         <option value="$PROJECT_DIR$/ServiceLayerApi/Startup.cs" />
@@ -105,11 +96,12 @@
         <option value="$PROJECT_DIR$/ServiceLayerApi/MQTT/BasePublishingService.cs" />
         <option value="$PROJECT_DIR$/ServiceLayerApi/MQTT/Client/MqttClientRepository.cs" />
         <option value="$PROJECT_DIR$/ServiceLayerApi/MQTT/MessagePublisher.cs" />
-        <option value="$PROJECT_DIR$/ServiceLayerApi/MQTT/BaseProcessingService.cs" />
         <option value="$PROJECT_DIR$/ServiceLayerApi/MQTT/Client/MqttClientExtensions.cs" />
-        <option value="$PROJECT_DIR$/ServiceLayerApi/DataProcessing/SensorProcessingService.cs" />
-        <option value="$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/DeviceInfoProcessingService.cs" />
         <option value="$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/DeviceRepository.cs" />
+        <option value="$PROJECT_DIR$/ServiceLayerApi/MQTT/BaseProcessingService.cs" />
+        <option value="$PROJECT_DIR$/ServiceLayerApi/DataProcessing/SensorProcessingService.cs" />
+        <option value="$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/Description/DeviceFactory.cs" />
+        <option value="$PROJECT_DIR$/ServiceLayerApi/DeviceNetwork/DeviceInfoProcessingService.cs" />
       </list>
     </option>
   </component>
@@ -181,7 +173,7 @@
       <option name="presentableId" value="Default" />
       <updated>1584467048144</updated>
       <workItem from="1584467053948" duration="677000" />
-      <workItem from="1584467976813" duration="19249000" />
+      <workItem from="1584467976813" duration="22191000" />
     </task>
     <servers />
   </component>
@@ -224,10 +216,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="145" key="Rider.ProjectTemplateDialog.Size/0.0.1536.824@0.0.1536.824" timestamp="1584468284131" />
-    <state x="597" y="88" key="RiderGenerateDialog" timestamp="1584562886214">
+    <state x="597" y="88" key="RiderGenerateDialog" timestamp="1584645541359">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="597" y="88" key="RiderGenerateDialog/0.0.1536.824@0.0.1536.824" timestamp="1584562886214" />
+    <state x="597" y="88" key="RiderGenerateDialog/0.0.1536.824@0.0.1536.824" timestamp="1584645541359" />
     <state x="277" y="56" key="SettingsEditor" timestamp="1584468065459">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

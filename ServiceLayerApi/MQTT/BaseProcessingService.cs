@@ -20,9 +20,17 @@ namespace ServiceLayerApi.MQTT
 
         public async Task Start()
         {
-            MqttClient = await _mqttClientRepository.Subscribe(Topic, HandleMessage);
+            MqttClient = await _mqttClientRepository.Subscribe(Topic, HandleMessage).ConfigureAwait(false);
             await OnStart();
         }
+
+        public async Task Stop()
+        {
+            await MqttClient.UnsubscribeAsync().ConfigureAwait(false);
+            await OnStop().ConfigureAwait(false);
+        }
+
+        protected abstract Task OnStop();
 
         protected IManagedMqttClient MqttClient { get; private set; }
 
