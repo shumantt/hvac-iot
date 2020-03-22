@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using ServiceLayerApi.DeviceNetwork.Description;
 using ServiceLayerApi.DeviceNetwork.Messages;
 using ServiceLayerApi.MQTT;
@@ -15,7 +16,8 @@ namespace ServiceLayerApi.DeviceNetwork
         public DeviceInfoProcessingService(
             MqttClientRepository mqttClientRepository,
             DeviceFactory deviceFactory,
-            DeviceRepository deviceRepository) : base(mqttClientRepository)
+            DeviceRepository deviceRepository,
+            ILogger<BaseProcessingService<DeviceInfo>> logger) : base(mqttClientRepository, logger)
         {
             _deviceFactory = deviceFactory;
             _deviceRepository = deviceRepository;

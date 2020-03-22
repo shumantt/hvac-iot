@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using ServiceLayerApi.DataProcessing.Messages;
 using ServiceLayerApi.DeviceNetwork;
 using ServiceLayerApi.DeviceNetwork.Description;
@@ -25,7 +26,8 @@ namespace ServiceLayerApi.DataProcessing
         public SensorProcessingService(MqttClientRepository mqttClientRepository,
             IEnumerable<IParameterAggregator> parameterAggregators,
             DeviceRepository deviceRepository,
-            IConfiguration configuration) : base(mqttClientRepository)
+            IConfiguration configuration,
+            ILogger<BaseProcessingService<SensorValues>> logger) : base(mqttClientRepository, logger)
         {
             var timerPeriod = int.Parse(configuration["SensorsAggregationTime"]);
             _parameterAggregators = parameterAggregators.ToArray();

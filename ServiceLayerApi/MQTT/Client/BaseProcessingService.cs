@@ -1,8 +1,8 @@
 using System;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using MQTTnet.Extensions.ManagedClient;
 using ServiceLayerApi.Common;
 
@@ -11,10 +11,12 @@ namespace ServiceLayerApi.MQTT.Client
     public abstract class BaseProcessingService<TMessage> : BackgroundService
     {
         private readonly MqttClientRepository _mqttClientRepository;
+        private readonly ILogger<BaseProcessingService<TMessage>> _logger;
 
-        protected BaseProcessingService(MqttClientRepository mqttClientRepository)
+        protected BaseProcessingService(MqttClientRepository mqttClientRepository, ILogger<BaseProcessingService<TMessage>> logger)
         {
             _mqttClientRepository = mqttClientRepository;
+            _logger = logger;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -49,7 +51,15 @@ namespace ServiceLayerApi.MQTT.Client
         private Task HandleMessage(string clientId, byte[] payload)
         {
             var message = payload.DeserializeJsonBytes<TMessage>();
-            return Process(message);
+            try
+            {
+                return Process(message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error processing message: {message.ToJson()}. ClientId: {clientId}");
+                return Task.CompletedTask;
+            }
         }
         
         protected abstract Task Process(TMessage message);
