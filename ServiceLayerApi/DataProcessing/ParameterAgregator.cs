@@ -21,7 +21,7 @@ namespace ServiceLayerApi.DataProcessing
 
         public MicroClimateParameterValue Aggregate(SensorResult[] sensorResults, ParameterType parameterType)
         {
-            var mean = sensorResults.Sum(x => x.GetValue<double>()) / sensorResults.Length;
+            var mean = sensorResults.Sum(x => x.GetDoubleValue()) / sensorResults.Length;
             return new MicroClimateParameterValue
             {
                 ParameterType = parameterType,

@@ -23,7 +23,7 @@ namespace ServiceLayerApi.DeviceNetwork
 
         protected override string Topic => "data/device";
 
-        protected override Task Process(Guid deviceId, DeviceInfo message)
+        protected override Task Process(DeviceInfo message)
         {
             var device = _deviceFactory.Build(message);
             if (device == null)

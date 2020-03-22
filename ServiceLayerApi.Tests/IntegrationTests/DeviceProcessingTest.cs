@@ -26,11 +26,10 @@ namespace ServiceLayerApi.Tests.IntegrationTests
             var deviceRepository = _factory.Services.GetService<DeviceRepository>();
             var deviceTopic = "data/device";
             var client = await clientRepository.Subscribe(deviceTopic, ((s, bytes) => Task.CompletedTask));
-            var deviceId = client.Options.ClientOptions.ClientId;
             var deviceInfo = new DeviceInfo
             {
                 DeviceCode = "CustomTemp",
-                Id = Guid.Parse(deviceId),
+                Id = Guid.NewGuid(),
                 Parameter = ParameterType.TemperatureInside,
                 Type = DeviceType.Sensor
             };

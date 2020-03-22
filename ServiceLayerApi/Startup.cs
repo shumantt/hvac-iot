@@ -8,13 +8,16 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using Scrutor;
 using ServiceLayerApi.DataProcessing;
+using ServiceLayerApi.DataProcessing.Messages;
 using ServiceLayerApi.DeviceNetwork;
 using ServiceLayerApi.DeviceNetwork.Description;
+using ServiceLayerApi.DeviceNetwork.Messages;
 using ServiceLayerApi.DeviceNetwork.Sensors;
 using ServiceLayerApi.MQTT.Server;
 
@@ -44,6 +47,13 @@ namespace ServiceLayerApi
             //TODO разобраться со сркутором
             services.AddSingleton<IDeviceBuilder, CustomTemperatureSensorBuilder>();
             services.AddSingleton<IParameterAggregator, MeanTemperatureAggregator>();
+            services.RemoveAll<CustomTemperatureSensor>();
+            services.RemoveAll<IDevice>();
+            services.RemoveAll<ISensor>();
+            services.RemoveAll<SensorResult>();
+            services.RemoveAll<SensorValues>();
+            services.RemoveAll<DeviceInfo>();
+
             
             services.AddHostedService<MqttServer>();
             services.AddHostedService<DeviceInfoProcessingService>();

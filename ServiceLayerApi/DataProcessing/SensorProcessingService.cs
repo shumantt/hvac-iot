@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
+using Microsoft.Extensions.Configuration;
 using ServiceLayerApi.DataProcessing.Messages;
 using ServiceLayerApi.DeviceNetwork;
 using ServiceLayerApi.DeviceNetwork.Description;
 using ServiceLayerApi.DeviceNetwork.Sensors;
-using ServiceLayerApi.MQTT;
 using ServiceLayerApi.MQTT.Client;
 
 namespace ServiceLayerApi.DataProcessing
@@ -21,12 +21,13 @@ namespace ServiceLayerApi.DataProcessing
         private readonly Timer _timer;
         private const int maxValuesToProcess = 100;
         private string microClimateParametersTopic = "data/microclimate";
-        private const int timerPeriod = 60_000;
 
         public SensorProcessingService(MqttClientRepository mqttClientRepository,
             IEnumerable<IParameterAggregator> parameterAggregators,
-            DeviceRepository deviceRepository) : base(mqttClientRepository)
+            DeviceRepository deviceRepository,
+            IConfiguration configuration) : base(mqttClientRepository)
         {
+            var timerPeriod = int.Parse(configuration["SensorsAggregationTime"]);
             _parameterAggregators = parameterAggregators.ToArray();
             _deviceRepository = deviceRepository;
             _timer = new Timer(timerPeriod) { AutoReset = true };
@@ -36,13 +37,14 @@ namespace ServiceLayerApi.DataProcessing
 
         protected override string Topic => "data/sensors";
 
-        protected override async Task Process(Guid deviceId, SensorValues message)
+        protected override Task Process(SensorValues message)
         {
-            var sensor = _deviceRepository.GetSensor(deviceId);
+            var sensor = _deviceRepository.GetSensor(message.DeviceId);
             if(sensor == null)
-                return;
+                return Task.CompletedTask;
             var sensorResult = sensor.NormalizeValue(message);
             _sensorResults.Enqueue(sensorResult);
+            return Task.CompletedTask;
         }
 
         protected override Task OnStart() => Task.CompletedTask;

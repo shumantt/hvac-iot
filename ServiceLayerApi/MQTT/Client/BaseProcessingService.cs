@@ -49,11 +49,10 @@ namespace ServiceLayerApi.MQTT.Client
         private Task HandleMessage(string clientId, byte[] payload)
         {
             var message = payload.DeserializeJsonBytes<TMessage>();
-            var deviceId = Guid.Parse(clientId);
-            return Process(deviceId, message);
+            return Process(message);
         }
         
-        protected abstract Task Process(Guid deviceId, TMessage message);
+        protected abstract Task Process(TMessage message);
 
         protected abstract Task OnStart();
     }

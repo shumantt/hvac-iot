@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using ServiceLayerApi.DataProcessing.Messages;
 using ServiceLayerApi.DeviceNetwork.Description;
 using ServiceLayerApi.DeviceNetwork.Messages;
@@ -19,8 +20,17 @@ namespace ServiceLayerApi.DeviceNetwork.Sensors
 
         public SensorResult NormalizeValue(SensorValues sensorValues)
         {
-            var temperatureCelsius = double.Parse(sensorValues.RawValue);
-            return new SensorResult(temperatureCelsius, Parameter, Id);
+            if (!double.TryParse(sensorValues.RawValue, NumberStyles.Any, CultureInfo.InvariantCulture, out var temp))
+            {
+                throw new InvalidOperationException($"Can't parse double value '{sensorValues.RawValue}' for CustomTemperatureSensor");
+            }
+            
+            return new SensorResult
+            {
+                RawValue = sensorValues.RawValue,
+                Parameter = Parameter,
+                DeviceId = Id
+            };
         }
     }
     
