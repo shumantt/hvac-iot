@@ -1,13 +1,14 @@
 using System;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
 using MQTTnet.Extensions.ManagedClient;
 using ServiceLayerApi.Common;
-using ServiceLayerApi.MQTT.Client;
 
-namespace ServiceLayerApi.MQTT
+namespace ServiceLayerApi.MQTT.Client
 {
-    public abstract class BaseProcessingService<TMessage>
+    public abstract class BaseProcessingService<TMessage> : BackgroundService
     {
         private readonly MqttClientRepository _mqttClientRepository;
 
@@ -16,15 +17,26 @@ namespace ServiceLayerApi.MQTT
             _mqttClientRepository = mqttClientRepository;
         }
 
-        protected abstract string Topic { get; }
-
-        public async Task Start()
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            MqttClient = await _mqttClientRepository.Subscribe(Topic, HandleMessage).ConfigureAwait(false);
-            await OnStart();
+            await Start().ConfigureAwait(false);
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                await Task.Delay(1000, stoppingToken);
+            }
+
+            await Stop().ConfigureAwait(false);
         }
 
-        public async Task Stop()
+        protected abstract string Topic { get; }
+
+        private async Task Start()
+        {
+            MqttClient = await _mqttClientRepository.Subscribe(Topic, HandleMessage).ConfigureAwait(false);
+            await OnStart().ConfigureAwait(false);
+        }
+
+        private async Task Stop()
         {
             await MqttClient.UnsubscribeAsync().ConfigureAwait(false);
             await OnStop().ConfigureAwait(false);

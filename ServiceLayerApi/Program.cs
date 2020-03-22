@@ -30,6 +30,7 @@ namespace ServiceLayerApi
                 NLog.LogManager.Shutdown();   
             }
         }
+        
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)

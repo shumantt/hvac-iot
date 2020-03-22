@@ -12,6 +12,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using Scrutor;
+using ServiceLayerApi.DataProcessing;
+using ServiceLayerApi.DeviceNetwork;
+using ServiceLayerApi.MQTT.Server;
 
 namespace ServiceLayerApi
 {
@@ -34,7 +37,11 @@ namespace ServiceLayerApi
                 .AddClasses()                        //    to register
                 .UsingRegistrationStrategy(RegistrationStrategy.Append) // 2. Define how to handle duplicates
                 .AsSelf()// 2. Specify which services they are registered as
-                .WithTransientLifetime()); // 3. Set the lifetime for the services
+                .WithSingletonLifetime()); // 3. Set the lifetime for the services
+
+            services.AddHostedService<MqttServer>();
+            services.AddHostedService<DeviceInfoProcessingService>();
+            services.AddHostedService<SensorProcessingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
