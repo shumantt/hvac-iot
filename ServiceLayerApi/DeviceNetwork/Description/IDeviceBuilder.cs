@@ -1,6 +1,6 @@
 using ServiceLayerApi.DeviceNetwork.Messages;
 
-namespace ServiceLayerApi.DeviceNetwork.Description.DeviceBuilders
+namespace ServiceLayerApi.DeviceNetwork.Description
 {
     public interface IDeviceBuilder
     {

@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MQTTnet;
-using MQTTnet.Protocol;
 using MQTTnet.Server;
 
 namespace ServiceLayerApi.MQTT.Server
@@ -12,7 +11,7 @@ namespace ServiceLayerApi.MQTT.Server
     public class MqttServer : BackgroundService
     {
         private readonly ILogger<MqttServer> _logger;
-        public const int Port = 54893;
+        
 
         public MqttServer(ILogger<MqttServer> logger)
         {
@@ -24,6 +23,7 @@ namespace ServiceLayerApi.MQTT.Server
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             await StartServer().ConfigureAwait(false);
+            _logger.LogInformation($"Started MQTT server: addres={ServerConfigurationProvider.ServerAddress}, port={ServerConfigurationProvider.Port}");
             while (!stoppingToken.IsCancellationRequested)
             {
                 await Task.Delay(1000, stoppingToken);
@@ -33,7 +33,7 @@ namespace ServiceLayerApi.MQTT.Server
         private Task StartServer()
         {
             var optionsBuilder = new MqttServerOptionsBuilder()
-                .WithDefaultEndpoint().WithDefaultEndpointPort(Port)
+                .WithDefaultEndpoint().WithDefaultEndpointPort(ServerConfigurationProvider.Port)
                 .WithSubscriptionInterceptor(
                     c =>
                     {

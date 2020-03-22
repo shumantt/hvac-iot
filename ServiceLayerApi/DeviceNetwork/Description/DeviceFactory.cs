@@ -1,7 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using ServiceLayerApi.Common;
-using ServiceLayerApi.DeviceNetwork.Description.DeviceBuilders;
 using ServiceLayerApi.DeviceNetwork.Messages;
 
 namespace ServiceLayerApi.DeviceNetwork.Description
@@ -10,9 +10,9 @@ namespace ServiceLayerApi.DeviceNetwork.Description
     {
         private readonly IDeviceBuilder[] _deviceBuilders;
 
-        public DeviceFactory(IDeviceBuilder[] deviceBuilders)
+        public DeviceFactory(IEnumerable<IDeviceBuilder> deviceBuilders)
         {
-            _deviceBuilders = deviceBuilders;
+            _deviceBuilders = deviceBuilders.ToArray();
         }
         
         public IDevice Build(DeviceInfo deviceInfo)

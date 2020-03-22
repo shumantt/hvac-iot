@@ -24,10 +24,10 @@ namespace ServiceLayerApi.DataProcessing
         private const int timerPeriod = 60_000;
 
         public SensorProcessingService(MqttClientRepository mqttClientRepository,
-            IParameterAggregator[] parameterAggregators,
+            IEnumerable<IParameterAggregator> parameterAggregators,
             DeviceRepository deviceRepository) : base(mqttClientRepository)
         {
-            _parameterAggregators = parameterAggregators;
+            _parameterAggregators = parameterAggregators.ToArray();
             _deviceRepository = deviceRepository;
             _timer = new Timer(timerPeriod) { AutoReset = true };
             _timer.Elapsed += (_, __) => AggregateResults();

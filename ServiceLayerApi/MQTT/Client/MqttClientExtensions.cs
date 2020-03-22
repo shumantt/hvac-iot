@@ -12,7 +12,7 @@ namespace ServiceLayerApi.MQTT
         {
             var message = new MqttApplicationMessageBuilder()
                 .WithTopic(topic)
-                .WithPayload(payload.ToJson())
+                .WithPayload(payload.ToJsonBytes())
                 .WithExactlyOnceQoS()
                 .WithRetainFlag()
                 .Build();

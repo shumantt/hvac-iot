@@ -1,7 +1,6 @@
 using System;
 using ServiceLayerApi.DataProcessing.Messages;
 using ServiceLayerApi.DeviceNetwork.Description;
-using ServiceLayerApi.DeviceNetwork.Description.DeviceBuilders;
 using ServiceLayerApi.DeviceNetwork.Messages;
 
 namespace ServiceLayerApi.DeviceNetwork.Sensors

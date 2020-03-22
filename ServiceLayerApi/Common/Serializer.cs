@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.Json;
 
 namespace ServiceLayerApi.Common
@@ -9,9 +10,21 @@ namespace ServiceLayerApi.Common
             return JsonSerializer.Serialize(value);
         }
 
-        public static T Deserialize<T>(this string value)
+        public static T DeserializeJson<T>(this string value)
         {
             return JsonSerializer.Deserialize<T>(value);
+        }
+
+        public static byte[] ToJsonBytes(this object value)
+        {
+            var json = JsonSerializer.Serialize(value);
+            return Encoding.UTF8.GetBytes(json);
+        }
+
+        public static T DeserializeJsonBytes<T>(this byte[] value)
+        {
+            var json = Encoding.UTF8.GetString(value);
+            return DeserializeJson<T>(json);
         }
     }
 }

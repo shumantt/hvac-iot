@@ -48,7 +48,7 @@ namespace ServiceLayerApi.MQTT.Client
 
         private Task HandleMessage(string clientId, byte[] payload)
         {
-            var message = Encoding.UTF8.GetString(payload).Deserialize<TMessage>();
+            var message = payload.DeserializeJsonBytes<TMessage>();
             var deviceId = Guid.Parse(clientId);
             return Process(deviceId, message);
         }

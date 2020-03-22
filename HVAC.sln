@@ -14,6 +14,8 @@ ProjectSection(SolutionItems) = preProject
 	DeviceLayer\temprature_sensor.ino = DeviceLayer\temprature_sensor.ino
 EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceLayerApi.Tests", "ServiceLayerApi.Tests\ServiceLayerApi.Tests.csproj", "{FA8E5148-ADE4-46B1-A713-5B51A9D2E4BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,11 +23,16 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3E46FE90-8B28-478F-95AF-A6DC970FE084} = {174A656A-C518-4C7B-9B4C-49590E211D8A}
+		{FA8E5148-ADE4-46B1-A713-5B51A9D2E4BC} = {174A656A-C518-4C7B-9B4C-49590E211D8A}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{3E46FE90-8B28-478F-95AF-A6DC970FE084}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3E46FE90-8B28-478F-95AF-A6DC970FE084}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E46FE90-8B28-478F-95AF-A6DC970FE084}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E46FE90-8B28-478F-95AF-A6DC970FE084}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA8E5148-ADE4-46B1-A713-5B51A9D2E4BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA8E5148-ADE4-46B1-A713-5B51A9D2E4BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA8E5148-ADE4-46B1-A713-5B51A9D2E4BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA8E5148-ADE4-46B1-A713-5B51A9D2E4BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
