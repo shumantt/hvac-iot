@@ -2,9 +2,8 @@ using System.Threading.Tasks;
 using MQTTnet;
 using MQTTnet.Extensions.ManagedClient;
 using ServiceLayerApi.Common;
-using ServiceLayerApi.MQTT.Client;
 
-namespace ServiceLayerApi.MQTT
+namespace ServiceLayerApi.MQTT.Client
 {
     public static class MqttClientExtensions
     {
