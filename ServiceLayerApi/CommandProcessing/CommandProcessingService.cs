@@ -46,7 +46,7 @@ namespace ServiceLayerApi.CommandProcessing
                     return CombineProcessingResult(constantCommandResults.ToArray());
                 }
                 
-                return new ParameterCommandProcessResult { Impact = (double)CommandImpact.NoChange };
+                return new ParameterCommandProcessResult { Impacts = new [] { CommandImpact.NoChange }};
             }
 
             var selectedActuators = actuators.Where(x => IsActuatorApplicable(x, parameterCommand.CommandImpact));
@@ -57,18 +57,17 @@ namespace ServiceLayerApi.CommandProcessing
         
         private ParameterCommandProcessResult CombineProcessingResult(ActuatorCommandProcessResult[] commandProcessingResults)
         {
-            var impact = commandProcessingResults
+            var impacts = commandProcessingResults
                 .Where(x => !x.Failed)
-                .Select(x => (double) x.ExecutedCommand.CommandImpact)
-                .ToArray()
-                .Mean();
+                .Select(x => x.ExecutedCommand.CommandImpact)
+                .ToArray();
             var failedMessages = commandProcessingResults.Where(x => x.Failed)
                 .Select(x => x.Error).ToArray();
             return new ParameterCommandProcessResult()
             {
-                Error = string.Join(";", failedMessages),
+                Error = failedMessages.Any() ? string.Join(";", failedMessages) : null,
                 Failed = failedMessages.Length == commandProcessingResults.Length,
-                Impact = impact
+                Impacts = impacts
             };
         }
 

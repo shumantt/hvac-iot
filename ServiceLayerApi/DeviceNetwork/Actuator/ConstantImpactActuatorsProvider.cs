@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using ServiceLayerApi.CommandProcessing.Models;
 using ServiceLayerApi.DeviceNetwork.Description;
 using ServiceLayerApi.DeviceNetwork.Messages;
@@ -9,10 +10,21 @@ namespace ServiceLayerApi.DeviceNetwork.Actuator
 {
     public class ConstantImpactActuatorsProvider
     {
+        public static readonly Guid RadiatorId = Guid.NewGuid();
+        private readonly bool _addRadiators;
+
+        public ConstantImpactActuatorsProvider(IConfiguration configuration)
+        {
+            _addRadiators = bool.Parse(configuration["AddRadiators"]);
+        }
+        
         public IEnumerable<IActuator> ProvideConstantImpactActuators()
         {
-            //батареи
-            yield return new ConstantActuator(ParameterType.TemperatureInside, CommandImpact.Increase,"radiators", Guid.NewGuid());
+            if (_addRadiators)
+            {
+                //батареи
+                yield return new ConstantActuator(ParameterType.TemperatureInside, CommandImpact.Increase,"radiators", RadiatorId);
+            }
         }
     }
 

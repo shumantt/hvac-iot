@@ -1,3 +1,5 @@
+using ServiceLayerApi.DeviceNetwork.Description;
+
 namespace ServiceLayerApi.CommandProcessing.Models
 {
     public class DecisionCommandProcessResult
@@ -7,7 +9,7 @@ namespace ServiceLayerApi.CommandProcessing.Models
     
     public class ParameterCommandProcessResult
     {
-        public double Impact { get; set; }
+        public CommandImpact[] Impacts { get; set; }
         public bool Failed { get; set; }
         public string Error { get; set; }   
     }

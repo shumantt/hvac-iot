@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using ServiceLayerApi.CommandProcessing.Models;
+using ServiceLayerApi.Common;
 using ServiceLayerApi.DeviceNetwork.Description;
 using ServiceLayerApi.DeviceNetwork.Messages;
 using ServiceLayerApi.DeviceNetwork.Sensors;
@@ -32,7 +33,7 @@ namespace ServiceLayerApi.DeviceNetwork.Actuator
                 throw new InvalidOperationException($"Can't process command with impact {command.CommandImpact}");
             }
             
-            var selectedImpact = (CommandImpact)commandImpacts.Min(x => Math.Abs(Math.Abs((int)x) - Math.Abs((int)command.CommandImpact)));
+            var selectedImpact = commandImpacts.MinBy(x => Math.Abs(Math.Abs((int)x) - Math.Abs((int)command.CommandImpact)));
             var commandToExecute = new RpcCommandRequest()
             {
                 CommandId = Guid.NewGuid(),
@@ -72,7 +73,7 @@ namespace ServiceLayerApi.DeviceNetwork.Actuator
         public bool CanBuild(DeviceInfo deviceInfo)
         {
             return deviceInfo.Type == DeviceType.Actuator
-                   && deviceInfo.DeviceCode == "Custom";
+                   && deviceInfo.DeviceCode.StartsWith("Custom");
         }
 
         public IDevice Build(DeviceInfo deviceInfo)

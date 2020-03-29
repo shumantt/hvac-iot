@@ -16,6 +16,7 @@ using Scrutor;
 using ServiceLayerApi.DataProcessing;
 using ServiceLayerApi.DataProcessing.Messages;
 using ServiceLayerApi.DeviceNetwork;
+using ServiceLayerApi.DeviceNetwork.Actuator;
 using ServiceLayerApi.DeviceNetwork.Description;
 using ServiceLayerApi.DeviceNetwork.Messages;
 using ServiceLayerApi.DeviceNetwork.Sensors;
@@ -35,7 +36,7 @@ namespace ServiceLayerApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = new JsonPascalCaseNamingPolicy());
             services.AddLogging(s => s.AddNLog());
             services.Scan(scan => scan     
                 .FromCallingAssembly() // 1. Find the concrete classes
@@ -44,20 +45,28 @@ namespace ServiceLayerApi
                 .AsSelf()// 2. Specify which services they are registered as
                 .WithSingletonLifetime()); // 3. Set the lifetime for the services
 
-            //TODO разобраться со сркутором
+            //TODO deal with scrutor
             services.AddSingleton<IDeviceBuilder, CustomTemperatureSensorBuilder>();
+            services.AddSingleton<IDeviceBuilder, RpcActuatorBuilder>();
             services.AddSingleton<IParameterAggregator, MeanTemperatureAggregator>();
-            services.RemoveAll<CustomTemperatureSensor>();
-            services.RemoveAll<IDevice>();
-            services.RemoveAll<ISensor>();
-            services.RemoveAll<SensorResult>();
-            services.RemoveAll<SensorValues>();
-            services.RemoveAll<DeviceInfo>();
-
+            RemoveDataClasses();
             
+            //background services
             services.AddHostedService<MqttServer>();
             services.AddHostedService<DeviceInfoProcessingService>();
             services.AddHostedService<SensorProcessingService>();
+            
+            void RemoveDataClasses()
+            {
+                services.RemoveAll<CustomTemperatureSensor>();
+                services.RemoveAll<IDevice>();
+                services.RemoveAll<ISensor>();
+                services.RemoveAll<SensorResult>();
+                services.RemoveAll<SensorValues>();
+                services.RemoveAll<DeviceInfo>();
+                services.RemoveAll<IActuator>();
+                services.RemoveAll<ConstantActuator>();
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

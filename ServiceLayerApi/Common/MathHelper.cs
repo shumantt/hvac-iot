@@ -15,5 +15,13 @@ namespace ServiceLayerApi.Common
             }
             return values.Sum() / values.Length;
         }
+
+        public static T MinBy<T>(this IEnumerable<T> source, Func<T, int> selector)
+        {
+            return source.Aggregate((curMin, x) => 
+                curMin == null || selector(x) < selector(curMin)
+                ? x
+                : curMin);
+        }
     }
 }
