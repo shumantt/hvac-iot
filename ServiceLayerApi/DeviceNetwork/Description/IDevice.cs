@@ -1,10 +1,9 @@
-using System;
+using ServiceLayerApi.DeviceNetwork.Messages;
 
 namespace ServiceLayerApi.DeviceNetwork.Description
 {
     public interface IDevice
     {
-        Guid Id { get; }
-        ParameterType Parameter { get; }
+        DeviceInfo DeviceInfo { get; }
     }
 }

@@ -53,16 +53,16 @@ namespace ServiceLayerApi.MQTT.Client
             var message = payload.DeserializeJsonBytes<TMessage>();
             try
             {
-                return Process(message);
+                return Process(message, payload);
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error processing message: {message.ToJson()}. ClientId: {clientId}");
+                _logger.LogError($"Error processing message: {message.ToJson()}. ClientId: {clientId}. Error: {e}");
                 return Task.CompletedTask;
             }
         }
         
-        protected abstract Task Process(TMessage message);
+        protected abstract Task Process(TMessage message, byte[] originalPayload);
 
         protected abstract Task OnStart();
     }

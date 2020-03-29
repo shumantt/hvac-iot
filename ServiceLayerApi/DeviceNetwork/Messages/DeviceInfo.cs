@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using ServiceLayerApi.DeviceNetwork.Description;
 
 namespace ServiceLayerApi.DeviceNetwork.Messages
@@ -15,6 +16,9 @@ namespace ServiceLayerApi.DeviceNetwork.Messages
 
     public class ActuatorDeviceInfo : DeviceInfo
     {
-        private CommandImpact[] Impacts { get; set; }    
+        public bool IsConstantImpact { get; set; }
+        public CommandImpact[] Impacts { get; set; }
+        public CommandImpact ConstantImpactValue => Impacts.Single();
+        public bool IsConstantImpactful => IsConstantImpact && Impacts.Single() != CommandImpact.NoChange;
     }
 }

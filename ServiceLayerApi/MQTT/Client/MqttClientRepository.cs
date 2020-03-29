@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -27,15 +28,9 @@ namespace ServiceLayerApi.MQTT.Client
         {
             if (_clients.ContainsKey(topic))
                 return _clients[topic];
-
-            var logger = new MqttNetLogger();
-            logger.LogMessagePublished += (sender, args) =>
-            {
-                _logger.LogInformation(args.TraceMessage.Exception, args.TraceMessage.Message);
-            };
             
             // Create a new MQTT client.
-            var factory = new MqttFactory(logger);
+            var factory = new MqttFactory();
             var mqttClient = factory.CreateManagedMqttClient();
             
             var options = new ManagedMqttClientOptionsBuilder()
@@ -67,6 +62,14 @@ namespace ServiceLayerApi.MQTT.Client
 
             _clients.TryAdd(topic, mqttClient);
             return mqttClient;
+        }
+
+        public async Task Unsubscribe(string topic)
+        {
+            var client = _clients[topic];
+            await client.StopAsync().ConfigureAwait(false);
+            client.Dispose();
+            _clients.Remove(topic, out _);
         }
     }
 }

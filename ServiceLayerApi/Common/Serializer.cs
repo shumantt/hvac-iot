@@ -5,7 +5,7 @@ namespace ServiceLayerApi.Common
 {
     public static class Serializer
     {
-        public static string ToJson(this object value)
+        public static string ToJson<T>(this T value)
         {
             return JsonSerializer.Serialize(value);
         }
@@ -15,7 +15,7 @@ namespace ServiceLayerApi.Common
             return JsonSerializer.Deserialize<T>(value);
         }
 
-        public static byte[] ToJsonBytes(this object value)
+        public static byte[] ToJsonBytes<T>(this T value)
         {
             var json = JsonSerializer.Serialize(value);
             return Encoding.UTF8.GetBytes(json);

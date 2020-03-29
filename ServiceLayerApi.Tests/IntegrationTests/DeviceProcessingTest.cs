@@ -39,8 +39,8 @@ namespace ServiceLayerApi.Tests.IntegrationTests
             var registeredDevice = deviceRepository.GetSensor(deviceInfo.Id);
             
             Assert.NotNull(registeredDevice);
-            Assert.Equal(registeredDevice.Id, deviceInfo.Id);
-            Assert.Equal(registeredDevice.Parameter, deviceInfo.Parameter);
+            Assert.Equal(registeredDevice.DeviceInfo.Id, deviceInfo.Id);
+            Assert.Equal(registeredDevice.DeviceInfo.Parameter, deviceInfo.Parameter);
         }
     }
 }

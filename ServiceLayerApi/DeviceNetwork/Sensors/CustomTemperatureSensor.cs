@@ -8,14 +8,12 @@ namespace ServiceLayerApi.DeviceNetwork.Sensors
 {
     public class CustomTemperatureSensor : ISensor
     {
-        public CustomTemperatureSensor(Guid id, bool inside)
+        public CustomTemperatureSensor(DeviceInfo deviceInfo)
         {
-            Id = id;
-            Parameter = inside ? ParameterType.TemperatureInside : ParameterType.TemperatureOutside;
+            DeviceInfo = deviceInfo;
         }
 
-        public Guid Id { get; }
-        public ParameterType Parameter { get; }
+        public DeviceInfo DeviceInfo { get; }
 
 
         public SensorResult NormalizeValue(SensorValues sensorValues)
@@ -28,8 +26,8 @@ namespace ServiceLayerApi.DeviceNetwork.Sensors
             return new SensorResult
             {
                 RawValue = sensorValues.RawValue,
-                Parameter = Parameter,
-                DeviceId = Id
+                Parameter = DeviceInfo.Parameter,
+                DeviceId = DeviceInfo.Id
             };
         }
     }
@@ -45,7 +43,7 @@ namespace ServiceLayerApi.DeviceNetwork.Sensors
 
         public IDevice Build(DeviceInfo deviceInfo)
         {
-            return new CustomTemperatureSensor(deviceInfo.Id, deviceInfo.Parameter == ParameterType.TemperatureInside);
+            return new CustomTemperatureSensor(deviceInfo);
         }
     }
 }

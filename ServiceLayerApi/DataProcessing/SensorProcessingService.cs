@@ -39,7 +39,7 @@ namespace ServiceLayerApi.DataProcessing
 
         protected override string Topic => "data/sensors";
 
-        protected override Task Process(SensorValues message)
+        protected override Task Process(SensorValues message, byte[] originalPayload)
         {
             var sensor = _deviceRepository.GetSensor(message.DeviceId);
             if(sensor == null)
