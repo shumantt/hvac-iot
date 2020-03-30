@@ -18,6 +18,7 @@ namespace ServiceLayerApi.DataProcessing
     {
         private readonly IParameterAggregator[] _parameterAggregators;
         private readonly DeviceRepository _deviceRepository;
+        private readonly ILogger<BaseProcessingService<SensorValues>> _logger;
         private ConcurrentQueue<SensorResult> _sensorResults = new ConcurrentQueue<SensorResult>();
         private readonly Timer _timer;
         private const int maxValuesToProcess = 100;
@@ -32,6 +33,7 @@ namespace ServiceLayerApi.DataProcessing
             var timerPeriod = int.Parse(configuration["SensorsAggregationTime"]);
             _parameterAggregators = parameterAggregators.ToArray();
             _deviceRepository = deviceRepository;
+            _logger = logger;
             _timer = new Timer(timerPeriod) { AutoReset = true };
             _timer.Elapsed += (_, __) => AggregateResults();
             _timer.Enabled = true;
@@ -42,8 +44,11 @@ namespace ServiceLayerApi.DataProcessing
         protected override Task Process(SensorValues message, byte[] originalPayload)
         {
             var sensor = _deviceRepository.GetSensor(message.DeviceId);
-            if(sensor == null)
+            if (sensor == null)
+            {
+                _logger.LogInformation($"Data from unknown device {message.DeviceId}");
                 return Task.CompletedTask;
+            }
             var sensorResult = sensor.NormalizeValue(message);
             _sensorResults.Enqueue(sensorResult);
             return Task.CompletedTask;

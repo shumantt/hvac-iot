@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
@@ -34,12 +35,14 @@ namespace ServiceLayerApi.MQTT.Client
 
         private async Task Start()
         {
+            _logger.LogInformation($"Started processing {typeof(TMessage).Name}");
             MqttClient = await _mqttClientRepository.Subscribe(Topic, HandleMessage).ConfigureAwait(false);
             await OnStart().ConfigureAwait(false);
         }
 
         private async Task Stop()
         {
+            _logger.LogInformation($"Stopping processing {typeof(TMessage).Name}");
             await MqttClient.UnsubscribeAsync().ConfigureAwait(false);
             await OnStop().ConfigureAwait(false);
         }
@@ -50,14 +53,15 @@ namespace ServiceLayerApi.MQTT.Client
 
         private Task HandleMessage(string clientId, byte[] payload)
         {
-            var message = payload.DeserializeJsonBytes<TMessage>();
             try
             {
+                var message = payload.DeserializeJsonBytes<TMessage>();
+                _logger.LogInformation($"Processing message from client: {clientId}");
                 return Process(message, payload);
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error processing message: {message.ToJson()}. ClientId: {clientId}. Error: {e}");
+                _logger.LogError($"Error processing message: {Encoding.UTF8.GetString(payload)}. ClientId: {clientId}. Error: {e}");
                 return Task.CompletedTask;
             }
         }

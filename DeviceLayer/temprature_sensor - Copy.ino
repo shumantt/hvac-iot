@@ -3,7 +3,6 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <PubSubClient.h>
-#include <PubSubClientTools.h>
 #include <Thread.h>             // https://github.com/ivanseidel/ArduinoThread
 #include <ThreadController.h>
 
@@ -12,17 +11,7 @@
 #define STAPSK  "korenimbir9"
 #endif
 
-const int mqtt_port = 54893; // Порт для подключения к серверу MQTT
-#define BUFFER_SIZE 100
-#define MQTT_SERVER "fe80::3cd3:39c6:57f:fa73%52"
-//const char *mqtt_user = "Login"; // Логи от сервер
-//const char *mqtt_pass = "Pass"; // Пароль от сервера
-
-WiFiClient espClient;
-PubSubClient client(MQTT_SERVER, mqtt_port, espClient);
-PubSubClientTools mqtt(client);
-
-// Data wire is connected to GPIO 4
+// Data wire is connected to GPIO 2
 #define ONE_WIRE_BUS 2
 
 // Setup a oneWire instance to communicate with any OneWire devices
@@ -35,21 +24,62 @@ const char* ssid = STASSID;
 const char* password = STAPSK;
 
 const int led = 13;
-const String s = "";
+
 ThreadController threadControl = ThreadController();
 Thread thread = Thread();
+
+const char* mqtt_server = "192.168.1.9";
+WiFiClient espClient;
+PubSubClient client(espClient);
+long lastMsg = 0;
+char msg[50];
+int value = 0;
+
 
 void setup(void) {
   pinMode(led, OUTPUT);
   digitalWrite(led, 0);
-  Serial.begin(9600);
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
-  Serial.println("");
+  Serial.begin(115200);
+  
+  setupWifi();
 
   sensors.begin();
 
-  // Wait for connection
+  setupThread();
+
+  client.setServer(mqtt_server, 54893);
+}
+
+void reconnect() {
+  // Loop until we're reconnected
+  while (!client.connected()) {
+    Serial.print("Attempting MQTT connection...");
+    // Create a random client ID
+    String clientId = "ESP8266Client-";
+    clientId += String(random(0xffff), HEX);
+    // Attempt to connect
+    if (client.connect(clientId.c_str())) {
+      Serial.println("connected");
+      // Once connected, publish an announcement...
+      client.publish("outTopic", "hello world");
+      // ... and resubscribe
+      client.subscribe("inTopic");
+    } else {
+      Serial.print("failed, rc=");
+      Serial.print(client.state());
+      Serial.println(" try again in 5 seconds");
+      // Wait 5 seconds before retrying
+      delay(5000);
+    }
+  }
+}
+
+
+void setupWifi() {
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  
+  Serial.println("");
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
@@ -59,29 +89,28 @@ void setup(void) {
   Serial.println(ssid);
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
+}
 
-  // Connect to MQTT
-  Serial.print(s+"Connecting to MQTT: "+MQTT_SERVER+" ... ");
-  if (client.connect("ESP8266Client")) {
-    Serial.println("connected");
-    mqtt.publish("data/device", "{ \"Id\": \"843f16dc-4570-4de4-ac17-376d1a6fdb50\", \"DeviceCode\": \"CustomTemp\", \"Parameter\": 1, \"Type\": 0}");
-  } else {
-    Serial.println(s+"failed, rc="+client.state());
-  }
-  
-    // Enable Thread
-    thread.onRun(publisher);
-    thread.setInterval(30000);
-    threadControl.add(&thread);
+void setupThread() {
+ // Enable Thread
+  thread.onRun(publisher);
+  thread.setInterval(1000);
+  threadControl.add(&thread);
 }
 
 void loop(void) {
-    client.loop();
-    threadControl.run();
+  threadControl.run();
+  if (!client.connected()) {
+    reconnect();
+  }
+  client.loop();
 }
 
 void publisher() {
-  mqtt.publish("data/sensors", getTemperature());
+  client.publish("data/sensors", "Hello");
+  Serial.println("In publisher serial");
+  
+  //mqtt.publish("data/sensors", getTemperature());
 }
 
 

@@ -2,8 +2,8 @@
 #include <WiFiClient.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
-#include <PubSubClient.h>
-#include <PubSubClientTools.h>
+//#include <PubSubClient.h>
+//#include <PubSubClientTools.h>
 #include <Thread.h>             // https://github.com/ivanseidel/ArduinoThread
 #include <ThreadController.h>
 
@@ -12,17 +12,7 @@
 #define STAPSK  "korenimbir9"
 #endif
 
-const int mqtt_port = 54893; // Порт для подключения к серверу MQTT
-#define BUFFER_SIZE 100
-#define MQTT_SERVER "fe80::3cd3:39c6:57f:fa73%52"
-//const char *mqtt_user = "Login"; // Логи от сервер
-//const char *mqtt_pass = "Pass"; // Пароль от сервера
-
-WiFiClient espClient;
-PubSubClient client(MQTT_SERVER, mqtt_port, espClient);
-PubSubClientTools mqtt(client);
-
-// Data wire is connected to GPIO 4
+// Data wire is connected to GPIO 2
 #define ONE_WIRE_BUS 2
 
 // Setup a oneWire instance to communicate with any OneWire devices
@@ -35,14 +25,26 @@ const char* ssid = STASSID;
 const char* password = STAPSK;
 
 const int led = 13;
-const String s = "";
+
+//const int mqtt_port = 54893; // Порт для подключения к серверу MQTT
+//#define BUFFER_SIZE 100
+//#define MQTT_SERVER "fe80::3cd3:39c6:57f:fa73%52"
+//const char *mqtt_user = "Login"; // Логи от сервер
+//const char *mqtt_pass = "Pass"; // Пароль от сервера
+
+//WiFiClient espClient;
+//PubSubClient client(MQTT_SERVER, mqtt_port, espClient);
+//PubSubClientTools mqtt(client);
+
+
+//const String s = "";
 ThreadController threadControl = ThreadController();
 Thread thread = Thread();
 
 void setup(void) {
   pinMode(led, OUTPUT);
   digitalWrite(led, 0);
-  Serial.begin(9600);
+  Serial.begin(115200);
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
   Serial.println("");
@@ -61,27 +63,31 @@ void setup(void) {
   Serial.println(WiFi.localIP());
 
   // Connect to MQTT
-  Serial.print(s+"Connecting to MQTT: "+MQTT_SERVER+" ... ");
-  if (client.connect("ESP8266Client")) {
-    Serial.println("connected");
-    mqtt.publish("data/device", "{ \"Id\": \"843f16dc-4570-4de4-ac17-376d1a6fdb50\", \"DeviceCode\": \"CustomTemp\", \"Parameter\": 1, \"Type\": 0}");
-  } else {
-    Serial.println(s+"failed, rc="+client.state());
-  }
+  // Serial.print(s+"Connecting to MQTT: "+MQTT_SERVER+" ... ");
+  // if (client.connect("ESP8266Client")) {
+  //   Serial.println("connected");
+  //   mqtt.publish("data/device", "{ \"Id\": \"843f16dc-4570-4de4-ac17-376d1a6fdb50\", \"DeviceCode\": \"CustomTemp\", \"Parameter\": 1, \"Type\": 0}");
+  // } else {
+  //   Serial.println(s+"failed, rc="+client.state());
+  // }
   
-    // Enable Thread
-    thread.onRun(publisher);
-    thread.setInterval(30000);
-    threadControl.add(&thread);
+  //   // Enable Thread
+     thread.onRun(publisher);
+     thread.setInterval(1000);
+     threadControl.add(&thread);
 }
 
 void loop(void) {
-    client.loop();
-    threadControl.run();
+  //Serial.println("Test serial");
+  threadControl.run();
+  //delay(500);
+    //client.loop();
+    
 }
 
 void publisher() {
-  mqtt.publish("data/sensors", getTemperature());
+  Serial.println("In publisher serial");
+  //mqtt.publish("data/sensors", getTemperature());
 }
 
 

@@ -15,6 +15,7 @@ namespace ServiceLayerApi.DeviceNetwork
         private readonly DeviceFactory _deviceFactory;
         private readonly DeviceRepository _deviceRepository;
         private readonly ConstantImpactActuatorsProvider _constantImpactActuatorsProvider;
+        private readonly ILogger<BaseProcessingService<DeviceInfo>> _logger;
 
         public DeviceInfoProcessingService(
             MqttClientRepository mqttClientRepository,
@@ -26,6 +27,7 @@ namespace ServiceLayerApi.DeviceNetwork
             _deviceFactory = deviceFactory;
             _deviceRepository = deviceRepository;
             _constantImpactActuatorsProvider = constantImpactActuatorsProvider;
+            _logger = logger;
         }
 
         protected override string Topic => "data/device";
@@ -36,9 +38,15 @@ namespace ServiceLayerApi.DeviceNetwork
             {
                 message = originalPayload.DeserializeJsonBytes<ActuatorDeviceInfo>();
             }
+
+            var deviceString = message.ToJson();
+            _logger.LogInformation($"Registering device: {deviceString}");
             var device = _deviceFactory.Build(message);
             if (device == null)
+            {
+                _logger.LogInformation($"Can't build device: {deviceString}");
                 return Task.CompletedTask;
+            }
             _deviceRepository.StoreDevice(device);
             return Task.CompletedTask;
         }

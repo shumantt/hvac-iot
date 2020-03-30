@@ -3,12 +3,12 @@ namespace ServiceLayerApi.DeviceNetwork.Description
     public enum ParameterType
     {
         Unknown = 0,
-        TemperatureInside,
-        TemperatureOutside,
-        Humidity,
-        Co2,
-        AtmosphericPressure,
-        Energy
+        TemperatureInside = 1,
+        TemperatureOutside = 2,
+        Humidity = 3,
+        Co2 = 4,
+        AtmosphericPressure = 5,
+        Energy = 6
     }
 
     public static class ParameterTypeExtensions

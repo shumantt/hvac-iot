@@ -11,6 +11,7 @@ namespace ServiceLayerApi.MQTT.Server
         {
             get
             {
+                return "192.168.1.9";
                 if (_serverAddress == null)
                 {
                     var ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
