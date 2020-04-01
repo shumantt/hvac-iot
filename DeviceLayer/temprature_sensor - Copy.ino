@@ -55,15 +55,11 @@ void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Create a random client ID
-    String clientId = "ESP8266Client-";
-    clientId += String(random(0xffff), HEX);
+    String clientId = "ESP8266ClientCustomTempSensor";
     // Attempt to connect
     if (client.connect(clientId.c_str())) {
       Serial.println("connected");
-      // Once connected, publish an announcement...
-      client.publish("outTopic", "hello world");
-      // ... and resubscribe
-      client.subscribe("inTopic");
+      client.publish("data/device", "{ \"Id\": \"843f16dc-4570-4de4-ac17-376d1a6fdb50\", \"DeviceCode\": \"CustomTemp\", \"Parameter\": 1, \"Type\": 0}");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -94,7 +90,7 @@ void setupWifi() {
 void setupThread() {
  // Enable Thread
   thread.onRun(publisher);
-  thread.setInterval(1000);
+  thread.setInterval(20000);
   threadControl.add(&thread);
 }
 
@@ -107,10 +103,8 @@ void loop(void) {
 }
 
 void publisher() {
-  client.publish("data/sensors", "Hello");
-  Serial.println("In publisher serial");
-  
-  //mqtt.publish("data/sensors", getTemperature());
+  String sensorValue = "{ \"RawValue\": \"" + getTemperature() + "\", \"DeviceId\": \"843f16dc-4570-4de4-ac17-376d1a6fdb50\"}";
+  client.publish("data/sensors", sensorValue.c_str());
 }
 
 
@@ -121,7 +115,7 @@ String getTemperature() {
 
   if(tempC == -127.00) {
     Serial.println("Failed to read from DS18B20 sensor");
-    return "--";
+    return "-9999";
   } else {
     Serial.print("Temperature Celsius: ");
     Serial.println(tempC); 
