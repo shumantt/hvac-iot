@@ -31,6 +31,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 regressor = linear_model.SGDRegressor(max_iter=1000, tol=1e-3)
 regressor.fit(X_train, y_train)
 
+
 coeff_df = pd.DataFrame(regressor.coef_, ['T6', 'people', 'command'], columns=['Coefficient'])
 print('coeff_df')
 print(coeff_df)
@@ -84,4 +85,42 @@ print('Root Mean Squared Error:', np.sqrt(metrics.mean_squared_error(y_test, y_p
 # y_pred = regressor.predict(X_test)
 # print('Mean Absolute Error:', metrics.mean_absolute_error(y_test, y_pred))  
 # print('Mean Squared Error:', metrics.mean_squared_error(y_test, y_pred))  
-# print('Root Mean Squared Error:', np.sqrt(metrics.mean_squared_error(y_test, y_pred)))
+# print('Root Mean Squared Error:', np.sqrt(metrics.mean_squared_error(y_test, y_pred)))  
+
+[...]
+training_parameters_values = ''
+fact_temperature_values = ''
+fact_temperature= ''
+parameters_values=''
+def hasMoreParameters():
+    return True
+
+# начальное обучение модели на исторических собранных данных
+regressor = linear_model.SGDRegressor(max_iter=1000, tol=1e-3)
+regressor.fit(training_parameters_values, fact_temperature_values)
+#
+[...]
+while hasMoreParameters():
+    [...]
+    # обновление коэффициентов модели
+    regressor.partial_fit(temperature_prediction, fact_temperature)
+    [...]
+    # предсказание значения темепературы через 10 минут
+    temperature_prediction = regressor.predict(parameters_values)
+[...]
+
+
+
+# начальное обучение модели на исторических собранных данных
+regressor = linear_model.SGDRegressor(max_iter=1000, tol=1e-3)
+regressor.fit(training_parameters_values, fact_temperature_values)
+
+[...]
+while hasMoreParameters():
+    [...]
+    # обновление коэффициентов модели
+    regressor.partial_fit(temperature_prediction, fact_temperature)
+    [...]
+    # предсказание значения темепературы через 10 минут
+    temperature_prediction = regressor.predict(parameters_values)
+[...]

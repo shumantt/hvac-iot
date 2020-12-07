@@ -5,7 +5,6 @@ using ServiceLayerApi.CommandProcessing.Models;
 using ServiceLayerApi.Common;
 using ServiceLayerApi.DeviceNetwork.Description;
 using ServiceLayerApi.DeviceNetwork.Messages;
-using ServiceLayerApi.DeviceNetwork.Sensors;
 using ServiceLayerApi.MQTT.Client.RPC;
 
 namespace ServiceLayerApi.DeviceNetwork.Actuator

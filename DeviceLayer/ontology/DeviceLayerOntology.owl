@@ -1,0 +1,237 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://andrey.shumeev.ru/device-layer-ontology#"
+     xml:base="http://andrey.shumeev.ru/device-layer-ontology"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://andrey.shumeev.ru/device-layer-ontology"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://andrey.shumeev.ru/device-layer-ontology#Id -->
+
+    <owl:ObjectProperty rdf:about="http://andrey.shumeev.ru/device-layer-ontology#Id"/>
+    
+
+
+    <!-- http://andrey.shumeev.ru/device-layer-ontology#impact -->
+
+    <owl:ObjectProperty rdf:about="http://andrey.shumeev.ru/device-layer-ontology#impact"/>
+    
+
+
+    <!-- http://andrey.shumeev.ru/device-layer-ontology#intensivity -->
+
+    <owl:ObjectProperty rdf:about="http://andrey.shumeev.ru/device-layer-ontology#intensivity"/>
+    
+
+
+    <!-- http://andrey.shumeev.ru/device-layer-ontology#parameter -->
+
+    <owl:ObjectProperty rdf:about="http://andrey.shumeev.ru/device-layer-ontology#parameter"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://andrey.shumeev.ru/device-layer-ontology#Code -->
+
+    <owl:DatatypeProperty rdf:about="http://andrey.shumeev.ru/device-layer-ontology#Code"/>
+    
+
+
+    <!-- http://andrey.shumeev.ru/device-layer-ontology#Id -->
+
+    <owl:DatatypeProperty rdf:about="http://andrey.shumeev.ru/device-layer-ontology#Id"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://andrey.shumeev.ru/device-layer-ontology#Actuator -->
+
+    <owl:Class rdf:about="http://andrey.shumeev.ru/device-layer-ontology#Actuator">
+        <rdfs:subClassOf rdf:resource="http://andrey.shumeev.ru/device-layer-ontology#Device"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://andrey.shumeev.ru/device-layer-ontology#impact"/>
+                <owl:someValuesFrom rdf:resource="http://andrey.shumeev.ru/device-layer-ontology#Impact"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://andrey.shumeev.ru/device-layer-ontology#Decrease -->
+
+    <owl:Class rdf:about="http://andrey.shumeev.ru/device-layer-ontology#Decrease">
+        <rdfs:subClassOf rdf:resource="http://andrey.shumeev.ru/device-layer-ontology#Impact"/>
+    </owl:Class>
+    
+
+
+    <!-- http://andrey.shumeev.ru/device-layer-ontology#Device -->
+
+    <owl:Class rdf:about="http://andrey.shumeev.ru/device-layer-ontology#Device">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://andrey.shumeev.ru/device-layer-ontology#parameter"/>
+                <owl:someValuesFrom rdf:resource="http://andrey.shumeev.ru/device-layer-ontology#Parameter"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://andrey.shumeev.ru/device-layer-ontology#Code"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://andrey.shumeev.ru/device-layer-ontology#Id"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://andrey.shumeev.ru/device-layer-ontology#Impact -->
+
+    <owl:Class rdf:about="http://andrey.shumeev.ru/device-layer-ontology#Impact">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://andrey.shumeev.ru/device-layer-ontology#intensivity"/>
+                <owl:someValuesFrom rdf:resource="http://andrey.shumeev.ru/device-layer-ontology#ImpactIntensivity"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://andrey.shumeev.ru/device-layer-ontology#ImpactIntensivity -->
+
+    <owl:Class rdf:about="http://andrey.shumeev.ru/device-layer-ontology#ImpactIntensivity"/>
+    
+
+
+    <!-- http://andrey.shumeev.ru/device-layer-ontology#Increase -->
+
+    <owl:Class rdf:about="http://andrey.shumeev.ru/device-layer-ontology#Increase">
+        <rdfs:subClassOf rdf:resource="http://andrey.shumeev.ru/device-layer-ontology#Impact"/>
+    </owl:Class>
+    
+
+
+    <!-- http://andrey.shumeev.ru/device-layer-ontology#Parameter -->
+
+    <owl:Class rdf:about="http://andrey.shumeev.ru/device-layer-ontology#Parameter"/>
+    
+
+
+    <!-- http://andrey.shumeev.ru/device-layer-ontology#Sensor -->
+
+    <owl:Class rdf:about="http://andrey.shumeev.ru/device-layer-ontology#Sensor">
+        <rdfs:subClassOf rdf:resource="http://andrey.shumeev.ru/device-layer-ontology#Device"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/shuma/ontologies/2020/3/untitled-ontology-10#AtmosphericPressure -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/shuma/ontologies/2020/3/untitled-ontology-10#AtmosphericPressure"/>
+    
+
+
+    <!-- http://www.semanticweb.org/shuma/ontologies/2020/3/untitled-ontology-10#Co2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/shuma/ontologies/2020/3/untitled-ontology-10#Co2"/>
+    
+
+
+    <!-- http://www.semanticweb.org/shuma/ontologies/2020/3/untitled-ontology-10#Energy -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/shuma/ontologies/2020/3/untitled-ontology-10#Energy"/>
+    
+
+
+    <!-- http://www.semanticweb.org/shuma/ontologies/2020/3/untitled-ontology-10#Humidity -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/shuma/ontologies/2020/3/untitled-ontology-10#Humidity"/>
+    
+
+
+    <!-- http://www.semanticweb.org/shuma/ontologies/2020/3/untitled-ontology-10#None -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/shuma/ontologies/2020/3/untitled-ontology-10#None"/>
+    
+
+
+    <!-- http://www.semanticweb.org/shuma/ontologies/2020/3/untitled-ontology-10#Normal -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/shuma/ontologies/2020/3/untitled-ontology-10#Normal"/>
+    
+
+
+    <!-- http://www.semanticweb.org/shuma/ontologies/2020/3/untitled-ontology-10#Strong -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/shuma/ontologies/2020/3/untitled-ontology-10#Strong"/>
+    
+
+
+    <!-- http://www.semanticweb.org/shuma/ontologies/2020/3/untitled-ontology-10#TemperatureInside -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/shuma/ontologies/2020/3/untitled-ontology-10#TemperatureInside"/>
+    
+
+
+    <!-- http://www.semanticweb.org/shuma/ontologies/2020/3/untitled-ontology-10#TemperatureOutside -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/shuma/ontologies/2020/3/untitled-ontology-10#TemperatureOutside"/>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

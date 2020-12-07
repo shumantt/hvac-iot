@@ -20,8 +20,8 @@ namespace ServiceLayerApi.Controllers.Commands
         [Route("decision")]
         public async Task<ActionResult<DecisionCommandProcessResult>> ProcessDecisionCommand([FromBody] DecisionCommand decisionCommand)
         {
-            var result = await _commandProcessingService.ProcessDecisionCommand(decisionCommand).ConfigureAwait(false);
-            return result;
+            var commandProcessResult = await _commandProcessingService.ProcessDecisionCommand(decisionCommand).ConfigureAwait(false);
+            return commandProcessResult;
         }
     }
 }

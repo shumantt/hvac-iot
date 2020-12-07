@@ -1,29 +1,32 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Decisions Layer", "Decisions Layer", "{4D7B9DDB-7938-418C-9593-BFFF6E49794F}"
-ProjectSection(SolutionItems) = preProject
-	Decisions Layer\Temperature.py = Decisions Layer\Temperature.py
-EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		Decisions Layer\Temperature.py = Decisions Layer\Temperature.py
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceLayer", "ServiceLayer", "{174A656A-C518-4C7B-9B4C-49590E211D8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceLayerApi", "ServiceLayerApi\ServiceLayerApi.csproj", "{3E46FE90-8B28-478F-95AF-A6DC970FE084}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceLayerApi", "ServiceLayerApi\ServiceLayerApi.csproj", "{3E46FE90-8B28-478F-95AF-A6DC970FE084}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DeviceLayer", "DeviceLayer", "{C805B8C6-5012-4FAE-85F7-9A47F7EB5702}"
-ProjectSection(SolutionItems) = preProject
-	DeviceLayer\temprature_sensor.ino = DeviceLayer\temprature_sensor.ino
-EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		DeviceLayer\temprature_sensor.ino = DeviceLayer\temprature_sensor.ino
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceLayerApi.Tests", "ServiceLayerApi.Tests\ServiceLayerApi.Tests.csproj", "{FA8E5148-ADE4-46B1-A713-5B51A9D2E4BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceLayerApi.Tests", "ServiceLayerApi.Tests\ServiceLayerApi.Tests.csproj", "{FA8E5148-ADE4-46B1-A713-5B51A9D2E4BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowNotifier", "WindowNotifier\WindowNotifier.csproj", "{FC723626-31FA-4E24-9EB3-6F80115FF560}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataTools", "Decisions Layer\DataTools\DataTools.csproj", "{0AAA452E-1617-4C02-BA4A-FD649EA912C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{3E46FE90-8B28-478F-95AF-A6DC970FE084} = {174A656A-C518-4C7B-9B4C-49590E211D8A}
-		{FA8E5148-ADE4-46B1-A713-5B51A9D2E4BC} = {174A656A-C518-4C7B-9B4C-49590E211D8A}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{3E46FE90-8B28-478F-95AF-A6DC970FE084}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -34,5 +37,25 @@ Global
 		{FA8E5148-ADE4-46B1-A713-5B51A9D2E4BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA8E5148-ADE4-46B1-A713-5B51A9D2E4BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA8E5148-ADE4-46B1-A713-5B51A9D2E4BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC723626-31FA-4E24-9EB3-6F80115FF560}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC723626-31FA-4E24-9EB3-6F80115FF560}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC723626-31FA-4E24-9EB3-6F80115FF560}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC723626-31FA-4E24-9EB3-6F80115FF560}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AAA452E-1617-4C02-BA4A-FD649EA912C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AAA452E-1617-4C02-BA4A-FD649EA912C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AAA452E-1617-4C02-BA4A-FD649EA912C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AAA452E-1617-4C02-BA4A-FD649EA912C7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3E46FE90-8B28-478F-95AF-A6DC970FE084} = {174A656A-C518-4C7B-9B4C-49590E211D8A}
+		{FA8E5148-ADE4-46B1-A713-5B51A9D2E4BC} = {174A656A-C518-4C7B-9B4C-49590E211D8A}
+		{FC723626-31FA-4E24-9EB3-6F80115FF560} = {C805B8C6-5012-4FAE-85F7-9A47F7EB5702}
+		{0AAA452E-1617-4C02-BA4A-FD649EA912C7} = {4D7B9DDB-7938-418C-9593-BFFF6E49794F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {441BFDCF-D3E2-439C-A64B-4D6F2D33563A}
 	EndGlobalSection
 EndGlobal

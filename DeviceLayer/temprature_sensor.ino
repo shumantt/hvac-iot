@@ -36,19 +36,6 @@ char msg[50];
 int value = 0;
 
 
-void setup(void) {
-  pinMode(led, OUTPUT);
-  digitalWrite(led, 0);
-  Serial.begin(115200);
-  
-  setupWifi();
-
-  sensors.begin();
-
-  setupThread();
-
-  client.setServer(mqtt_server, 54893);
-}
 
 void reconnect() {
   // Loop until we're reconnected
@@ -94,6 +81,20 @@ void setupThread() {
   threadControl.add(&thread);
 }
 
+void setup(void) {
+  pinMode(led, OUTPUT);
+  digitalWrite(led, 0);
+  Serial.begin(115200);
+  
+  setupWifi();
+
+  sensors.begin();
+
+  setupThread();
+
+  client.setServer(mqtt_server, 54893);
+}
+
 void loop(void) {
   threadControl.run();
   if (!client.connected()) {
@@ -109,13 +110,12 @@ void publisher() {
 
 
 String getTemperature() {
-    // Call sensors.requestTemperatures() to issue a global temperature and Requests to all devices on the bus
   sensors.requestTemperatures(); 
   float tempC = sensors.getTempCByIndex(0);
 
   if(tempC == -127.00) {
     Serial.println("Failed to read from DS18B20 sensor");
-    return "-9999";
+    return "--";
   } else {
     Serial.print("Temperature Celsius: ");
     Serial.println(tempC); 

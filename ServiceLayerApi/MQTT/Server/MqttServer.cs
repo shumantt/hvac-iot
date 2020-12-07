@@ -33,7 +33,8 @@ namespace ServiceLayerApi.MQTT.Server
         private Task StartServer()
         {
             var optionsBuilder = new MqttServerOptionsBuilder()
-                .WithDefaultEndpoint().WithDefaultEndpointPort(ServerConfigurationProvider.Port)
+                .WithDefaultEndpoint()
+                .WithDefaultEndpointPort(ServerConfigurationProvider.Port)
                 .WithSubscriptionInterceptor(
                     c =>
                     {
